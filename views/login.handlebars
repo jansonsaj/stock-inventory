@@ -14,9 +14,7 @@
 		<h1>Log In</h1>
 		<a href="/register">Register</a>
 		</header>
-		{{#if msg}}
- 			<p class="msg">{{msg}}</p>
-		{{/if}}
+		{{> message}}
 		<main>
 		<form action="/login" method="post">
 			<p>
