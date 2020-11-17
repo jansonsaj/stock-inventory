@@ -35,6 +35,32 @@ async function checkStatus(response) {
 }
 
 /**
+ * Shows a status message
+ * @param {string} text Message text to display
+ * @param {string} type Type for styling. Either 'info', 'success' or 'error'
+ * @param {boolean} autoHide Whether to automatically hide the message
+ */
+function showMessage(text, type = 'info', autoHide = true) {
+	const message = document.querySelector('.msg')
+	message.innerHTML = text
+	message.classList.remove('info', 'success', 'error')
+	message.classList.add(type)
+	message.hidden = false
+	if (autoHide) {
+		hideMessage()
+	}
+}
+
+/**
+ * Hide the status message after a delay (default: 2 seconds)
+ * @param {number} delay Amount in milliseconds to wait before hiding
+ */
+function hideMessage(delay = DEFAULT_DELAY_MS) {
+	window.setTimeout(() => {
+		document.querySelector('.msg').hidden = true
+	}, delay)
+}
+
 /**
  * Adds an item to the specified list
  * @param {object[]} list List to add to
@@ -96,10 +122,12 @@ function displayItem(item) {
 	displayValueIfExists('#item-min-stock', item.min_stock)
 	displayValueIfExists('#item-stock', item.stock)
 	displayValueIfExists('#item-barcode', item.barcode)
+	showMessage('Item displayed', 'success')
 }
 
 
 window.addEventListener('DOMContentLoaded', () => {
+	hideMessage()
 	const items = []
 
 	const barcodeScannerInput = document.querySelector('#barcode-scanner')
@@ -111,7 +139,9 @@ window.addEventListener('DOMContentLoaded', () => {
 			.then(checkStatus)
 			.then(addToList(items))
 			.then(displayItem)
+			.catch(err => showMessage(err.message, 'error'))
 
 		barcodeScannerInput.value = ''
+		console.log(items)
 	})
 })

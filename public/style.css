@@ -1,16 +1,37 @@
-
 body {
-		font-family: Arial, Helvetica, sans-serif;
-		margin: 0;
-	}
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+}
 
 /* formats the red message boxes */
+
 .msg {
-	border: 1px solid red;
+	border: 1px solid lightseagreen;
 	font-weight: bold;
-	color: red;
+	color: lightseagreen;
 	padding: 1em;
-	margin: 2em;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 4em auto;
+	max-width: 80vw;
+	background: white;
+}
+
+.msg.info {
+	color: lightseagreen;
+	border-color: lightseagreen;
+}
+
+.msg.success {
+	color: green;
+	border-color: green;
+}
+
+.msg.error {
+	color: red;
+	border-color: red;
 }
 
 header {
@@ -44,14 +65,14 @@ h3 {
 	margin-left: 0.6vw;
 }
 
-header > a {
+header>a {
 	margin-top: 3vw;
 	margin-right: 3vw;
 	float: right;
 	font-size: 1.3vw;
 }
 
-header > img {
+header>img {
 	width: 7vw;
 	border-radius: 50%;
 	position: absolute;
@@ -99,13 +120,13 @@ section {
 	border-radius: 1vw;
 }
 
-section > p {
+section>p {
 	margin: 0;
 	padding: 0;
 	margin-bottom: 0.5vw;
 }
 
-section > h3 {
+section>h3 {
 	margin: 0;
 	padding: 0;
 	font-size: 1.8vw;
@@ -126,9 +147,9 @@ fieldset {
 }
 
 legend {
-	position:absolute;
-  top:0;
-	left:0;
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 25.5vw;
 	background-color: #ccc;
 	border-bottom: 5px solid grey;
@@ -139,26 +160,26 @@ input[type="file"] {
 	display: none;
 }
 
-input[type="submit"], header > a, .custom-file-upload {
-  background-color: grey;
-  border: 2px solid grey;
-  color: white;
+input[type="submit"], header>a, .custom-file-upload {
+	background-color: grey;
+	border: 2px solid grey;
+	color: white;
 	padding: 0.4vw 0.8vw;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
 	font-size: 1.5vw;
 	/* border-radius: 0.6vw; */
 }
 
-input[type="submit"]:hover, header > a:hover, .custom-file-upload:hover {
-  color: grey;
-  background-color: white;
+input[type="submit"]:hover, header>a:hover, .custom-file-upload:hover {
+	color: grey;
+	background-color: white;
 }
 
 input[type="text"], input[type="email"], input[type="password"], textarea, select {
 	font-size: 1.5vw;
-	width: 25vw;
+	width: 100%;
 	border: 1px solid #CCC;
 	padding: 0.5vw;
 	/* margin-bottom: 1vw; */
@@ -176,33 +197,35 @@ select {
 	-webkit-border-radius: 0px;
 }
 
-form > br {
+form>br {
 	line-height: 3vw;
 }
 
 dl {
-  width: 35vw;
-  overflow: hidden;
-  /* background: #ff0; */
-  padding: 0;
+	width: 35vw;
+	overflow: hidden;
+	/* background: #ff0; */
+	padding: 0;
 	margin: 0;
 	font-size: 1.5vw;
 }
+
 dt {
-  float: left;
-  width: 10.5vw;
-  /* adjust the width; make sure the total of both is 100% */
-  /* background: #cc0; */
-  padding: 0.5vw;
-  margin: 0
+	float: left;
+	width: 10.5vw;
+	/* adjust the width; make sure the total of both is 100% */
+	/* background: #cc0; */
+	padding: 0.5vw;
+	margin: 0
 }
+
 dd {
-  float: left;
-  width: 21vw;
-  /* adjust the width; make sure the total of both is 100% */
+	float: left;
+	width: 21vw;
+	/* adjust the width; make sure the total of both is 100% */
 	/* background: #dd0; */
 	padding: 0.5vw;
-  margin: 0
+	margin: 0
 }
 
 /* ===== TABLES ===== */
