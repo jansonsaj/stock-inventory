@@ -1,12 +1,12 @@
 
 import Router from 'koa-router'
 import bodyParser from 'koa-body'
+import { Accounts } from '../modules/accounts.js'
+import { dbName } from '../helpers/config.js'
 
 const publicRouter = new Router()
 publicRouter.use(bodyParser({multipart: true}))
 
-import { Accounts } from '../modules/accounts.js'
-const dbName = 'website.db'
 
 /**
  * The secure home page.
@@ -16,8 +16,12 @@ const dbName = 'website.db'
  */
 publicRouter.get('/', async ctx => {
 	try {
-		await ctx.render('index', ctx.hbs)
-	} catch(err) {
+		if (ctx.hbs.authorised) {
+			return ctx.redirect('/inventory?msg=you are logged in...')
+		} else {
+			await ctx.render('index', ctx.hbs)
+		}
+	} catch (err) {
 		await ctx.render('error', ctx.hbs)
 	}
 })
@@ -43,7 +47,7 @@ publicRouter.post('/register', async ctx => {
 		// call the functions in the module
 		await account.register(ctx.request.body.user, ctx.request.body.pass, ctx.request.body.email)
 		ctx.redirect(`/login?msg=new user "${ctx.request.body.user}" added, you need to log in`)
-	} catch(err) {
+	} catch (err) {
 		ctx.hbs.msg = err.message
 		ctx.hbs.body = ctx.request.body
 		console.log(ctx.hbs)
@@ -59,7 +63,7 @@ publicRouter.get('/validate/:user/:token', async ctx => {
 	try {
 		console.log('VALIDATE')
 		console.log(`URL --> ${ctx.request.url}`)
-		if(!ctx.request.url.includes('.css')) {
+		if (!ctx.request.url.includes('.css')) {
 			console.log(ctx.params)
 			const milliseconds = 1000
 			const now = Math.floor(Date.now() / milliseconds)
@@ -68,7 +72,7 @@ publicRouter.get('/validate/:user/:token', async ctx => {
 			ctx.hbs.msg = `account "${ctx.params.user}" has been validated`
 			await ctx.render('login', ctx.hbs)
 		}
-	} catch(err) {
+	} catch (err) {
 		await ctx.render('login', ctx.hbs)
 	}
 })
@@ -85,9 +89,9 @@ publicRouter.post('/login', async ctx => {
 		const body = ctx.request.body
 		await account.login(body.user, body.pass)
 		ctx.session.authorised = true
-		const referrer = body.referrer || '/secure'
+		const referrer = body.referrer || '/inventory'
 		return ctx.redirect(`${referrer}?msg=you are now logged in...`)
-	} catch(err) {
+	} catch (err) {
 		ctx.hbs.msg = err.message
 		await ctx.render('login', ctx.hbs)
 	} finally {
