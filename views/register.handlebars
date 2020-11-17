@@ -14,9 +14,7 @@
 		<h1>Create an Account</h1>
 		<a href="/login">Log in</a>
 		</header>
-		{{#if msg}}
- 			<p class="msg">{{msg}}</p>
-		{{/if}}
+		{{> message}}
 		<main>
 		<form action="/register" enctype="multipart/form-data" method="post">
 			<p>

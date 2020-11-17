@@ -8,23 +8,23 @@
 	<meta name="description" content="form to add new books">
 	<meta name="author" content="Mark Tyers">
 	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+	<script src="{{host}}/main.js"></script>
 </head>
 
 <body>
 	<header>
-		<h1>Home</h1>
-		{{#if authorised}}
+		<h1>Inventory Page</h1>
 		<a href="/logout">Log out</a>
-		{{else}}
-		<a href="/login">Log in</a>
-		{{/if}}
 	</header>
 	{{> message}}
 	<main>
-		<p>This is the home page. Users can see it without logging in.</p>
-		{{#if authorised}}
-		<p><a href="/inventory">inventory page</a></p>
-		{{/if}}
+		<section>
+			<input type="text" placeholder="Barcode" id="barcode-scanner" autofocus>
+		</section>
+		<section id="item">
+			<img src="" alt="">
+			<h2 id="item-name"></h2>
+		</section>
 	</main>
 </body>
 

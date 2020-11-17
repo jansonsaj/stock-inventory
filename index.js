@@ -4,7 +4,10 @@ import serve from 'koa-static'
 import views from 'koa-views'
 import session from 'koa-session'
 
+import { registerPartials } from './helpers/handlebars.js'
 import { apiRouter } from './routes/routes.js'
+
+registerPartials()
 
 const app = new Koa()
 app.keys = ['darkSecret']
