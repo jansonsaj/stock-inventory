@@ -75,10 +75,14 @@ function addToList(list) {
 			items: list.map(obj => ({...obj, retail_price: penceToPounds(obj.retail_price)})),
 			totalPrice: penceToPounds(list.reduce((acc, obj) => acc + obj.retail_price, 0))
 		}
+		document.querySelector('input[name=items]').value = JSON.stringify(context.items)
+		document.querySelector('input[name=totalPrice]').value = context.totalPrice
+		document.querySelector('input[type=submit]').disabled = false
 
 		const template = document.querySelector('#item-list-template').innerHTML
 		const renderItemList = Handlebars.compile(template)
 		document.querySelector('#item-list').innerHTML = renderItemList(context)
+
 		return Promise.resolve(item)
 	}
 }
@@ -135,6 +139,22 @@ function displayItem(item) {
 	showMessage('Item displayed', 'success')
 }
 
+/**
+ * Adds an action on form reset, that clears the scanned items
+ * and empties the provided list of items
+ * @param {object[]} items List of items
+ */
+function addFormResetAction(items) {
+	document.querySelector('form').addEventListener('reset', () => {
+		document.querySelector('#item').hidden = true
+		document.querySelector('#item-list').innerHTML = ''
+		document.querySelector('input[name=items]').value = ''
+		document.querySelector('input[name=totalPrice]').value = ''
+		document.querySelector('input[type=submit]').disabled = true
+		items.splice(0, items.length)
+	})
+}
+
 
 window.addEventListener('DOMContentLoaded', () => {
 	hideMessage()
@@ -154,4 +174,6 @@ window.addEventListener('DOMContentLoaded', () => {
 		barcodeScannerInput.value = ''
 		console.log(items)
 	})
+
+	addFormResetAction(items)
 })

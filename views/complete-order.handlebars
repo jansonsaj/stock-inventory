@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Home Page</title>
+	<meta name="description" content="form to add new books">
+	<meta name="author" content="Mark Tyers">
+	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+	<script src="{{host}}/main.js"></script>
+</head>
+
+<body>
+	<header>
+		<h1>Complete Order</h1>
+		<a href="/logout">Log out</a>
+	</header>
+	{{> message}}
+	<main>
+		<section>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each items as |item|}}
+						<tr>
+							<td>{{item.name}}</td>
+							<td>£{{item.retail_price}}</td>
+						</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>Total: </th> 
+						<td>£{{totalPrice}}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</section>
+	</main>
+</body>
+
+</html>
