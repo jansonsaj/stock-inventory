@@ -150,3 +150,55 @@ test('SUBTRACT STOCK : subtract stock to nonexisting barcode', async test => {
 		items.close()
 	}
 })
+
+test('DEDUPLICATE AND COUNT : correctly counts items', async test => {
+	test.plan(2)
+	const item1 = sampleItem()
+	item1.barcode = 'item1'
+	const item2 = sampleItem()
+	item2.barcode = 'item2'
+	const items = Items.deduplicateAndCount([item1, item1, item2, item1, item2])
+	items.forEach(item => {
+		if (item.barcode === 'item1') {
+			test.is(item.count, 3)
+		} else if (item.barcode === 'item2') {
+			test.is(item.count, 2)
+		}
+	})
+})
+
+test('DEDUPLICATE AND COUNT : correctly totals retail price', async test => {
+	test.plan(2)
+	const item1 = sampleItem()
+	item1.barcode = 'item1'
+	item1.retail_price = 15
+	const item2 = sampleItem()
+	item2.barcode = 'item2'
+	item2.retail_price = 10
+	const items = Items.deduplicateAndCount([item1, item1, item2, item1, item2])
+	items.forEach(item => {
+		if (item.barcode === 'item1') {
+			test.is(item.total_retail_price, 45)
+		} else if (item.barcode === 'item2') {
+			test.is(item.total_retail_price, 20)
+		}
+	})
+})
+
+test('DEDUPLICATE AND COUNT : correctly totals wholesale price', async test => {
+	test.plan(2)
+	const item1 = sampleItem()
+	item1.barcode = 'item1'
+	item1.wholesale_price = 15
+	const item2 = sampleItem()
+	item2.barcode = 'item2'
+	item2.wholesale_price = 10
+	const items = Items.deduplicateAndCount([item1, item1, item2, item1, item2])
+	items.forEach(item => {
+		if (item.barcode === 'item1') {
+			test.is(item.total_wholesale_price, 45)
+		} else if (item.barcode === 'item2') {
+			test.is(item.total_wholesale_price, 20)
+		}
+	})
+})

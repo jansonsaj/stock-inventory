@@ -92,6 +92,29 @@ class Items {
 	async close() {
 		await this.db.close()
 	}
+
+	/**
+	 * Counts occurrances of each item and removes duplicates
+	 * and provides a total cost of duplicated items
+	 * @param {object[]} items Item array
+	 * @return {object[]} Returns items array without duplicates and with count
+	 */
+	static deduplicateAndCount(items) {
+		const itemMap = {}
+		items.forEach((item) => {
+			if(itemMap[item.barcode]) {
+				itemMap[item.barcode].count += 1
+				itemMap[item.barcode].total_retail_price += item.retail_price
+				itemMap[item.barcode].total_wholesale_price += item.wholesale_price
+			} else {
+				itemMap[item.barcode] = item
+				itemMap[item.barcode].count = 1
+				itemMap[item.barcode].total_retail_price = item.retail_price
+				itemMap[item.barcode].total_wholesale_price = item.wholesale_price
+			}
+		})
+		return Object.values(itemMap)
+	}
 }
 
 export { Items }

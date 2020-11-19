@@ -19,12 +19,27 @@ inventoryRouter.get('/', async ctx => {
 	}
 })
 
-inventoryRouter.post('/complete-order', async ctx => {
+inventoryRouter.post('/order-summary', async ctx => {
 	try {
 		const {items, totalPrice} = ctx.request.body
-		ctx.hbs.items = JSON.parse(items)
+		const processedItems = Items.deduplicateAndCount(JSON.parse(items))
+		ctx.hbs.items = processedItems
 		ctx.hbs.totalPrice = totalPrice
-		await ctx.render('complete-order', ctx.hbs)
+		await ctx.render('order-summary', ctx.hbs)
+	} catch (err) {
+		console.log(err)
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+})
+
+inventoryRouter.post('/complete-order', async ctx => {
+	try {
+		const items = await new Items(dbName)
+		JSON.parse(ctx.request.body.items).forEach(item => {
+			items.subtractStock(item.barcode, item.count)
+		})
+		await ctx.redirect('/inventory?msg=Order successfully completed')
 	} catch (err) {
 		console.log(err)
 		ctx.hbs.error = err.message

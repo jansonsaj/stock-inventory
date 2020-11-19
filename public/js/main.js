@@ -7,18 +7,6 @@ const SERVER_ERROR_STATUS = 500
 
 const DEFAULT_DELAY_MS = 2000
 
-const PENCE_PER_POUND = 100
-const POUND_DECIMAL_PLACES = 2
-
-/**
- * Represent pence in equivalent pounds
- * @param {number} pence Amount in pence
- * @return {string} String representation of the pence in pounds
- */
-function penceToPounds(pence) {
-	return (pence / PENCE_PER_POUND).toFixed(POUND_DECIMAL_PLACES)
-}
-
 /**
  * Checks whether fetch() returned a successful message
  * @param {object} response Fetch response
@@ -65,17 +53,17 @@ function hideMessage(delay = DEFAULT_DELAY_MS) {
 /**
  * Adds an item to the specified list and displays it in a table
  * with a total at the bottom
- * @param {object[]} list List to add to
+ * @param {object[]} items List of items to add to
  * @returns {function} Returns a function that resolves with its input
  */
-function addToList(list) {
+function addToList(items) {
 	return (item) => {
-		list.push(item)
+		items.push(item)
 		const context = {
-			items: list.map(obj => ({...obj, retail_price: penceToPounds(obj.retail_price)})),
-			totalPrice: penceToPounds(list.reduce((acc, obj) => acc + obj.retail_price, 0))
+			items,
+			totalPrice: items.reduce((acc, obj) => acc + obj.retail_price, 0)
 		}
-		document.querySelector('input[name=items]').value = JSON.stringify(context.items)
+		document.querySelector('input[name=items]').value = JSON.stringify(items)
 		document.querySelector('input[name=totalPrice]').value = context.totalPrice
 		document.querySelector('input[type=submit]').disabled = false
 
@@ -130,8 +118,8 @@ function displayItem(item) {
 	displayImage('#item-photo', item.photo, item.name)
 	displayValueIfExists('#item-name', item.name)
 	displayValueIfExists('#item-description', item.description)
-	displayValueIfExists('#item-wholesale-price', penceToPounds(item.wholesale_price))
-	displayValueIfExists('#item-retail-price', penceToPounds(item.retail_price))
+	displayValueIfExists('#item-wholesale-price', item.wholesale_price)
+	displayValueIfExists('#item-retail-price', item.retail_price)
 	displayValueIfExists('#item-max-stock', item.max_stock)
 	displayValueIfExists('#item-min-stock', item.min_stock)
 	displayValueIfExists('#item-stock', item.stock)
