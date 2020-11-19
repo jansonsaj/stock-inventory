@@ -21,6 +21,12 @@
 	<main>
 		<section>
 			<input type="text" placeholder="Barcode" id="barcode-scanner" autofocus>
+			<form action="/inventory/complete-order" method="POST">
+				<input type="hidden" name="items">
+				<input type="hidden" name="totalPrice">
+				<input type="reset" value="Clear">
+				<input type="submit" value="Done">
+			</form>
 		</section>
 		<section id="item-list"></section>
 		<section id="item" hidden>

@@ -19,6 +19,19 @@ inventoryRouter.get('/', async ctx => {
 	}
 })
 
+inventoryRouter.post('/complete-order', async ctx => {
+	try {
+		const {items, totalPrice} = ctx.request.body
+		ctx.hbs.items = JSON.parse(items)
+		ctx.hbs.totalPrice = totalPrice
+		await ctx.render('complete-order', ctx.hbs)
+	} catch (err) {
+		console.log(err)
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+})
+
 inventoryRouter.get('/item/:barcode', async ctx => {
 	try {
 		const items = await new Items(dbName)
