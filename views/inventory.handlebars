@@ -8,6 +8,7 @@
 	<meta name="description" content="form to add new books">
 	<meta name="author" content="Mark Tyers">
 	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
 	<script src="{{host}}/main.js"></script>
 </head>
 
@@ -21,6 +22,7 @@
 		<section>
 			<input type="text" placeholder="Barcode" id="barcode-scanner" autofocus>
 		</section>
+		<section id="item-list"></section>
 		<section id="item" hidden>
 			<h2 id="item-name"></h2>
 			<img id="item-photo" src="" alt="" width="100%">
@@ -28,6 +30,9 @@
 			<p>Price: <span id="item-retail-price"></span>£</p>
 		</section>
 	</main>
+	<script type="x-template" id="item-list-template">
+		{{> item-list}}
+	</script>
 </body>
 
 </html>
