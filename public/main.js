@@ -1,4 +1,5 @@
 /* main.js */
+/* globals Handlebars */
 
 const SUCCESS_STATUS = 200
 const CLIENT_ERROR_STATUS = 400
@@ -62,13 +63,22 @@ function hideMessage(delay = DEFAULT_DELAY_MS) {
 }
 
 /**
- * Adds an item to the specified list
+ * Adds an item to the specified list and displays it in a table
+ * with a total at the bottom
  * @param {object[]} list List to add to
  * @returns {function} Returns a function that resolves with its input
  */
 function addToList(list) {
 	return (item) => {
 		list.push(item)
+		const context = {
+			items: list.map(obj => ({...obj, retail_price: penceToPounds(obj.retail_price)})),
+			totalPrice: penceToPounds(list.reduce((acc, obj) => acc + obj.retail_price, 0))
+		}
+
+		const template = document.querySelector('#item-list-template').innerHTML
+		const renderItemList = Handlebars.compile(template)
+		document.querySelector('#item-list').innerHTML = renderItemList(context)
 		return Promise.resolve(item)
 	}
 }

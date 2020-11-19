@@ -20,3 +20,14 @@ export async function registerPartials() {
 		)
 	})
 }
+
+/**
+ * Register raw helper, which allows {{{{raw}}}} to be used
+ * in handlebars templates to define an area that does not need
+ * to be parsed. This can be used to parse templates on client-side.
+ */
+export function registerRawHelper() {
+	handlebars.registerHelper('raw', function(options) {
+		return options.fn(this)
+	})
+}
