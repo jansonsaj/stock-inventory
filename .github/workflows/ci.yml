@@ -1,0 +1,26 @@
+# This workflow will run the linter
+# and run all tests on all pushes and pull requests
+
+name: Continuous Integration
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  lint-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use NodeJS 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Clean install Node packages
+        run: npm ci
+      - name: Run the linter
+        run: npm run linter
+      - name: Run the tests
+        run: npm test
