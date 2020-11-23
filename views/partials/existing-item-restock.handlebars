@@ -1,0 +1,33 @@
+{{{{raw}}}}
+<form action="/inventory/items/{{barcode}}/restock" method="POST">
+    <img src="{{photo}}" alt="{{name}}" width="100%">
+    <label>Name
+        <input type="text" name="name" value="{{name}}" disabled />
+    </label>
+    <label>Description
+        <textarea name="description" disabled >{{description}}</textarea>
+    </label>
+    <label>Barcode
+        <input type="text" name="barcode" value="{{barcode}}" disabled />
+    </label>
+    <label>Wholesale price (£)
+        <input type="number" name="wholesale_price" min="0.00" step="0.01" value="{{asPounds wholesale_price}}" disabled />
+    </label>
+    <label>Retail price (£)
+        <input type="number" name="retail_price" min="0.00" step="0.01" value="{{asPounds retail_price}}" disabled />
+    </label>
+    <label>Minimum stock level
+        <input type="number" name="min_stock" min="0" value="{{min_stock}}" disabled />
+    </label>
+    <label>Maximum stock level
+        <input type="number" name="max_stock" min="0" value="{{max_stock}}" disabled />
+    </label>
+    <label>Current stock
+        <input type="number" name="stock" min="0" value="{{stock}}" disabled />
+    </label>
+    <label>Stock to add
+        <input type="number" name="count" min="0" autofocus />
+    </label>
+    <input type="submit" value="Add stock" />
+</form>
+{{{{/raw}}}}

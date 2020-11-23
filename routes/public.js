@@ -1,12 +1,9 @@
 
 import Router from 'koa-router'
-import bodyParser from 'koa-body'
 import { Accounts } from '../modules/accounts.js'
 import { dbName } from '../helpers/config.js'
 
 const publicRouter = new Router()
-publicRouter.use(bodyParser({multipart: true}))
-
 
 /**
  * The secure home page.
