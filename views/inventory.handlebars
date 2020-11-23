@@ -9,8 +9,7 @@
 	<meta name="author" content="Mark Tyers">
 	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
-	<script src="{{host}}/js/register-helpers.js"></script>
-	<script src="{{host}}/js/main.js"></script>
+	<script type="module" src="{{host}}/js/inventory.js"></script>
 </head>
 
 <body>
@@ -25,8 +24,8 @@
 			<form action="/inventory/order-summary" method="POST">
 				<input type="hidden" name="items">
 				<input type="hidden" name="totalPrice">
-				<input type="reset" value="Clear">
-				<input type="submit" value="Done">
+				<a href="/inventory">Clear</a>
+				<input type="submit" value="Done" disabled>
 			</form>
 		</section>
 		<section id="item-list"></section>
