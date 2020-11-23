@@ -1,29 +1,11 @@
-/* main.js */
+/* inventory.js */
 /* globals Handlebars */
 
-import {showMessage} from './main.js'
+import { showMessage } from './main.js'
+import { checkStatus } from './utils.js'
 
-const SUCCESS_STATUS = 200
-const CLIENT_ERROR_STATUS = 400
-const SERVER_ERROR_STATUS = 500
-
+/** Keep a list of all scanned items */
 const items = []
-
-/**
- * Checks whether fetch() returned a successful message
- * @param {object} response Fetch response
- * @returns {Promise<object>} If successful returns response JSON
- * @throws If unsuccessful throws an error
- */
-async function checkStatus(response) {
-	if (response.status >= SUCCESS_STATUS && response.status < CLIENT_ERROR_STATUS) {
-		return response.json()
-	}
-	if (response.status >= CLIENT_ERROR_STATUS && response.status < SERVER_ERROR_STATUS) {
-		throw new Error(await response.text())
-	}
-	throw new Error('An error ocurred')
-}
 
 /**
  * Calculate the sum of retail price from all scanned items
@@ -111,9 +93,10 @@ window.addEventListener('DOMContentLoaded', () => {
 	const barcodeScannerInput = document.querySelector('#barcode-scanner')
 	barcodeScannerInput.addEventListener('keyup', event => {
 		if (event.key !== 'Enter') return
-		if (!barcodeScannerInput.value.trim()) return
+		const barcode = barcodeScannerInput.value.trim()
+		if (!barcode) return
 
-		fetch(`${window.location.origin}/inventory/item/${barcodeScannerInput.value.trim()}`)
+		fetch(`${window.location.origin}/inventory/items/${barcode}`)
 			.then(checkStatus)
 			.then(addToList)
 			.then(displayItem)

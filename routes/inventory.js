@@ -47,7 +47,36 @@ inventoryRouter.post('/complete-order', async ctx => {
 	}
 })
 
-inventoryRouter.get('/item/:barcode', async ctx => {
+inventoryRouter.get('/restock', async ctx => {
+	try {
+		await ctx.render('restock', ctx.hbs)
+	} catch (err) {
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+})
+
+inventoryRouter.post('/items', async ctx => {
+	try {
+		const item = ctx.request.body
+		if (!item) {
+			ctx.status = 404
+			ctx.body = `There is no item with barcode ${ctx.params.barcode}`
+			return
+		}
+		// Change stored prices from Pounds to Pence
+		if (item.wholesale_price) item.wholesale_price *= 100
+		if (item.retail_price) item.retail_price *= 100
+
+		const items = await new Items(dbName)
+		ctx.body = await items.insert(item)
+		ctx.status = 201
+	} catch (err) {
+		ctx.status = 500
+	}
+})
+
+inventoryRouter.get('/items/:barcode', async ctx => {
 	try {
 		const items = await new Items(dbName)
 		const item = await items.findByBarcode(ctx.params.barcode)
@@ -57,6 +86,27 @@ inventoryRouter.get('/item/:barcode', async ctx => {
 		} else {
 			ctx.body = item
 		}
+	} catch (err) {
+		ctx.status = 500
+	}
+})
+
+inventoryRouter.post('/items/:barcode/restock', async ctx => {
+	try {
+		const items = await new Items(dbName)
+		const item = await items.findByBarcode(ctx.params.barcode)
+		if (!item) {
+			ctx.status = 404
+			ctx.body = `There is no item with barcode ${ctx.params.barcode}`
+			return
+		}
+		const count = parseInt(ctx.request.body.count)
+		if (!count) {
+			ctx.status = 400
+			ctx.body = 'You need to provide a count to restock'
+			return
+		}
+		ctx.body = await items.addStock(ctx.params.barcode, count)
 	} catch (err) {
 		ctx.status = 500
 	}
