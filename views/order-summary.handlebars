@@ -9,12 +9,13 @@
 	<meta name="author" content="Mark Tyers">
 	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
-	<script src="{{host}}/main.js"></script>
+	<script src="{{host}}/js/register-helpers.js"></script>
+	<script src="{{host}}/js/main.js"></script>
 </head>
 
 <body>
 	<header>
-		<h1>Complete Order</h1>
+		<h1>Order Summary</h1>
 		<a href="/logout">Log out</a>
 	</header>
 	{{> message}}
@@ -24,6 +25,8 @@
 				<thead>
 					<tr>
 						<th>Name</th>
+						<th>Count</th>
+						<th>Unit Price</th>
 						<th>Price</th>
 					</tr>
 				</thead>
@@ -31,17 +34,24 @@
 					{{#each items as |item|}}
 						<tr>
 							<td>{{item.name}}</td>
-							<td>£{{item.retail_price}}</td>
+							<td>{{item.count}}</td>
+							<td>£{{asPounds item.retail_price}}</td>
+							<td>£{{asPounds item.total_retail_price}}</td>
 						</tr>
 					{{/each}}
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>Total: </th> 
-						<td>£{{totalPrice}}</td>
+						<th colspan="3">Total:</th> 
+						<td>£{{asPounds totalPrice}}</td>
 					</tr>
 				</tfoot>
 			</table>
+			<form action="/inventory/complete-order" method="POST">
+				<input type="hidden" name="items" value="{{stringify items}}">
+				<a href="/inventory">Cancel</a>
+				<input type="submit" value="Complete transaction">
+			</form>
 		</section>
 	</main>
 </body>
