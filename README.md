@@ -52,3 +52,14 @@ The SQLite3 commandline tool is already installed and should be used to configur
 - `.schema <TABLE_NAME>` - Displays table schema
 - `.read <SQL_SCRIPT>` - Execute SQL script from file
 - `.exit` - Exit SQLite console
+
+## CI/CD
+
+This repository uses GitHub Actions to run CI/CD Workflows.
+The following workflows exist:
+- On every push and pull request: Lint and test the code
+- On pushes to master: Deploy the code to Heroku
+
+## Hosting
+
+The code is hosted on Heroku with the name **jansonsa-sem1**. It can be accessed by visiting [jansonsa-sem1.herokuapp.com](https://jansonsa-sem1.herokuapp.com/)
