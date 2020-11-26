@@ -1,0 +1,59 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Home Page</title>
+	<meta name="description" content="form to add new books">
+	<meta name="author" content="Mark Tyers">
+	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+	<script type="module" src="{{host}}/js/new-item.js"></script>
+</head>
+
+<body>
+	<header>
+		<h1>New Item</h1>
+		<a href="/logout">Log out</a>
+	</header>
+	{{> message}}
+	<main>
+		<section>
+			<p>Fill out the form below to add a new item to the inventory.</p>
+		</section>
+		<section>
+			<form action="/inventory/items" method="POST">
+				<label>Photo
+					<input type="file" name="photo" />
+				</label>
+				<label>Name
+					<input type="text" name="name" autofocus />
+				</label>
+				<label>Description
+					<input type="text" name="description" />
+				</label>
+				<label>Barcode
+					<input type="text" name="barcode" required />
+				</label>
+				<label>Wholesale price (£)
+					<input type="number" name="wholesale_price" min="0.00" step="0.01" />
+				</label>
+				<label>Retail price (£)
+					<input type="number" name="retail_price" min="0.00" step="0.01" />
+				</label>
+				<label>Minimum stock level
+					<input type="number" name="min_stock" min="0" />
+				</label>
+				<label>Maximum stock level
+					<input type="number" name="max_stock" min="0" />
+				</label>
+				<label>Count (current stock)
+					<input type="number" name="stock" min="0" />
+				</label>
+				<input type="submit" value="Add item" />
+			</form>
+		</section>
+	</main>
+</body>
+
+</html>

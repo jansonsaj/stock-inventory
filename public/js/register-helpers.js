@@ -4,4 +4,7 @@
 const PENCE_PER_POUND = 100
 const POUND_DECIMAL_PLACES = 2
 
-Handlebars.registerHelper('asPounds', (pence) => (pence / PENCE_PER_POUND).toFixed(POUND_DECIMAL_PLACES))
+// Only register helpers when Handlebars is defined (Handlebars script is imported)
+if (typeof Handlebars !== 'undefined') {
+	Handlebars.registerHelper('asPounds', (pence) => (pence / PENCE_PER_POUND).toFixed(POUND_DECIMAL_PLACES))
+}
