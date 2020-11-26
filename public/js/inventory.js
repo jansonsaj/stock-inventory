@@ -38,55 +38,13 @@ function addToList(item) {
 }
 
 /**
- * If element exists, set its inner HTML value
- * @param {string} querySelector Element's query selector
- * @param {string} value Inner HTML value to set
- */
-function displayValueIfExists(querySelector, value) {
-	const element = document.querySelector(querySelector)
-	if (element) {
-		element.innerHTML = value
-	}
-}
-
-/**
- * Display image if src param is present. Hide it otherwise
- * @param {string} querySelector "img" element's query selector
- * @param {string} src Image source
- * @param {string} alt Alt text
- */
-function displayImage(querySelector, src, alt) {
-	const image = document.querySelector(querySelector)
-	if (image) {
-		if (src) {
-			image.src = src
-			image.alt = alt
-			image.hidden = false
-		} else {
-			image.hidden = true
-		}
-	}
-}
-
-/**
  * Displays the item details
  * @param {object} item Item from inventory
  */
 function displayItem(item) {
-	const itemSection = document.querySelector('#item')
-	if (itemSection) {
-		itemSection.hidden = false
-	}
-	displayImage('#item-photo', item.photo, item.name)
-	displayValueIfExists('#item-name', item.name)
-	displayValueIfExists('#item-description', item.description)
-	displayValueIfExists('#item-wholesale-price', item.wholesale_price)
-	displayValueIfExists('#item-retail-price', item.retail_price)
-	displayValueIfExists('#item-max-stock', item.max_stock)
-	displayValueIfExists('#item-min-stock', item.min_stock)
-	displayValueIfExists('#item-stock', item.stock)
-	displayValueIfExists('#item-barcode', item.barcode)
-	showMessage('Item displayed', 'success')
+	const template = document.querySelector('#scanned-item-template').innerHTML
+	const renderItem = Handlebars.compile(template)
+	document.querySelector('#item').innerHTML = renderItem(item)
 }
 
 window.addEventListener('DOMContentLoaded', () => {
