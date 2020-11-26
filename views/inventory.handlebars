@@ -29,15 +29,13 @@
 			</form>
 		</section>
 		<section id="item-list"></section>
-		<section id="item" hidden>
-			<h2 id="item-name"></h2>
-			<img id="item-photo" src="" alt="" width="100%">
-			<p id="item-description"></p>
-			<p>Price: <span id="item-retail-price"></span>£</p>
-		</section>
+		<section id="item"></section>
 	</main>
 	<script type="x-template" id="item-list-template">
 		{{> item-list}}
+	</script>
+	<script type="x-template" id="scanned-item-template">
+		{{> scanned-item}}
 	</script>
 </body>
 
