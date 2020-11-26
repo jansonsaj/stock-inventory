@@ -202,3 +202,52 @@ test('DEDUPLICATE AND COUNT : correctly totals wholesale price', async test => {
 		}
 	})
 })
+
+test('NEED ORDERING : correctly selects items', async test => {
+	test.plan(2)
+	const items = await new Items()
+	// sampleItem() min stock = 10 and max stock = 100
+	const item1 = sampleItem()
+	item1.barcode = 'item1'
+	item1.stock = 5
+	await items.insert(item1)
+	await items.insert(sampleItem())
+
+	const itemsToOrder = await items.needOrdering()
+
+	test.is(itemsToOrder.length, 1)
+	test.is(itemsToOrder[0].barcode, 'item1')
+})
+
+test('NEED ORDERING : correct order count', async test => {
+	test.plan(1)
+	const items = await new Items()
+	// sampleItem() min stock = 10 and max stock = 100
+	const item1 = sampleItem()
+	item1.stock = 5
+	await items.insert(item1)
+
+	const itemsToOrder = await items.needOrdering()
+
+	test.is(itemsToOrder[0].order_count, 95)
+})
+
+test('NEED ORDERING : correct order price', async test => {
+	test.plan(1)
+	const items = await new Items()
+	// sampleItem() min stock = 10, max stock = 100 and wholesale price = 500
+	const item1 = sampleItem()
+	item1.stock = 5
+	await items.insert(item1)
+
+	const itemsToOrder = await items.needOrdering()
+
+	test.is(itemsToOrder[0].order_price, 95 * 500)
+})
+
+test('NEED ORDERING : when no items require ordering, return empty array', async test => {
+	test.plan(1)
+	const items = await new Items()
+	const itemsToOrder = await items.needOrdering()
+	test.deepEqual(itemsToOrder, [])
+})

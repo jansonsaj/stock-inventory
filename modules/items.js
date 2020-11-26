@@ -89,6 +89,19 @@ class Items {
 		return true
 	}
 
+	async needOrdering() {
+		const sql = 'SELECT * FROM items WHERE stock < min_stock;'
+		const items = await this.db.all(sql)
+		return items.map(item => {
+			const orderCount = item.max_stock - item.stock
+			return {
+				...item,
+				order_count: orderCount,
+				order_price: item.wholesale_price * orderCount
+			}
+		})
+	}
+
 	async close() {
 		await this.db.close()
 	}

@@ -75,6 +75,22 @@ inventoryRouter.get('/all-items', async ctx => {
 		await ctx.render('error', ctx.hbs)
 	}
 })
+
+inventoryRouter.get('/items-to-order', async ctx => {
+	try {
+		const items = await new Items(dbName)
+		const itemsToOrder = await items.needOrdering()
+		ctx.hbs.items = itemsToOrder
+		ctx.hbs.totalOrderPrice = itemsToOrder
+			.reduce((acc, obj) => acc + obj.order_price, 0)
+		console.log(ctx.hbs)
+		await ctx.render('items-to-order', ctx.hbs)
+	} catch (err) {
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+})
+
 inventoryRouter.post('/items', async ctx => {
 	try {
 		const item = ctx.request.body
