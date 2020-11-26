@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Home Page</title>
+	<meta name="description" content="form to add new books">
+	<meta name="author" content="Mark Tyers">
+	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+	<script type="module" src="{{host}}/js/main.js"></script>
+</head>
+
+<body>
+	<header>
+		<h1>Items to order</h1>
+		<a href="/logout">Log out</a>
+	</header>
+	{{> message}}
+	<main>
+		<section>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Wholesale price</th>
+						<th>Current Stock</th>
+						<th>Count to order</th>
+						<th>Order price</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each items as |item|}}
+						<tr>
+							<td>{{item.name}}</td>
+							<td>£{{asPounds item.wholesale_price}}</td>
+							<td>{{item.stock}}</td>
+							<td>{{item.order_count}}</td>
+							<td>£{{asPounds item.order_price}}</td>
+						</tr>
+					{{else}}
+						<tr>
+							<td colspan="5">No items need to be ordered</td>
+						</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="4">Total order price: </th> 
+						<td>£{{asPounds totalOrderPrice}}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</section>
+	</main>
+</body>
+
+</html>
