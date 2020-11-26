@@ -65,6 +65,16 @@ inventoryRouter.get('/new-item', async ctx => {
 	}
 })
 
+inventoryRouter.get('/all-items', async ctx => {
+	try {
+		const items = await new Items(dbName)
+		ctx.hbs.items = await items.all()
+		await ctx.render('all-items', ctx.hbs)
+	} catch (err) {
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+})
 inventoryRouter.post('/items', async ctx => {
 	try {
 		const item = ctx.request.body
