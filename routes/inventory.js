@@ -56,12 +56,21 @@ inventoryRouter.get('/restock', async ctx => {
 	}
 })
 
+inventoryRouter.get('/new-item', async ctx => {
+	try {
+		await ctx.render('new-item', ctx.hbs)
+	} catch (err) {
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+})
+
 inventoryRouter.post('/items', async ctx => {
 	try {
 		const item = ctx.request.body
 		if (!item) {
-			ctx.status = 404
-			ctx.body = `There is no item with barcode ${ctx.params.barcode}`
+			ctx.status = 400
+			ctx.body = 'You need to provide an item to insert'
 			return
 		}
 		// Change stored prices from Pounds to Pence
@@ -72,7 +81,8 @@ inventoryRouter.post('/items', async ctx => {
 		ctx.body = await items.insert(item)
 		ctx.status = 201
 	} catch (err) {
-		ctx.status = 500
+		ctx.body = err.message
+		ctx.status = 400
 	}
 })
 
