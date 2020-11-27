@@ -2,11 +2,9 @@ import handlebars from 'handlebars'
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { Items } from '../modules/items.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
-const PENCE_PER_POUND = 100
-const POUND_DECIMAL_PLACES = 2
 
 /**
  * Register all Handlebars partials in directory ../views/partials/
@@ -39,7 +37,7 @@ function registerRawHelper() {
  * Register currency helper, which displays pence as pounds
  */
 function registerCurrencyHelper() {
-	handlebars.registerHelper('asPounds', (pence) => (pence / PENCE_PER_POUND).toFixed(POUND_DECIMAL_PLACES))
+	handlebars.registerHelper('asPounds', Items.penceToPounds)
 }
 
 /**
