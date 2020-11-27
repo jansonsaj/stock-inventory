@@ -1,0 +1,57 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Home Page</title>
+	<meta name="description" content="form to add new books">
+	<meta name="author" content="Mark Tyers">
+	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+	<script type="module" src="{{host}}/js/item.js"></script>
+</head>
+
+<body>
+	<header>
+		<h1>{{item.name}}</h1>
+		<a href="/logout">Log out</a>
+	</header>
+	{{> message}}
+	<main>
+		<section>
+			<form item-barcode="{{item.barcode}}">
+				<label>
+					<input type="file" name="image" hidden readonly/>
+					<img src="{{item.photo}}" alt="{{item.name}}" width="100%">
+				</label>
+				<label>Name
+					<input type="text" name="name" value="{{item.name}}" />
+				</label>
+				<label>Description
+					<textarea name="description" >{{item.description}}</textarea>
+				</label>
+				<label>Barcode
+					<input type="text" name="barcode" value="{{item.barcode}}"/>
+				</label>
+				<label>Wholesale price (£)
+					<input type="number" name="wholesale_price" min="0.00" step="0.01" value="{{asPounds item.wholesale_price}}" />
+				</label>
+				<label>Retail price (£)
+					<input type="number" name="retail_price" min="0.00" step="0.01" value="{{asPounds item.retail_price}}" />
+				</label>
+				<label>Minimum stock level
+					<input type="number" name="min_stock" min="0" value="{{item.min_stock}}" />
+				</label>
+				<label>Maximum stock level
+					<input type="number" name="max_stock" min="0" value="{{item.max_stock}}" />
+				</label>
+				<label>Current stock
+					<input type="number" name="stock" min="0" value="{{item.stock}}" />
+				</label>
+				<input type="submit" value="Update" />
+			</form>
+		</section>
+	</main>
+</body>
+
+</html>

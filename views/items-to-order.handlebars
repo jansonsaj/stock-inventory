@@ -32,7 +32,7 @@
 				<tbody>
 					{{#each items as |item|}}
 						<tr>
-							<td>{{item.name}}</td>
+							<td><a href="/inventory/items/{{item.barcode}}" >{{item.name}}</a></td>
 							<td>£{{asPounds item.wholesale_price}}</td>
 							<td>{{item.stock}}</td>
 							<td>{{item.order_count}}</td>

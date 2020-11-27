@@ -29,7 +29,7 @@
 				<tbody>
 					{{#each items as |item|}}
 						<tr>
-							<td>{{item.name}}</td>
+							<td><a href="/inventory/items/{{item.barcode}}" >{{item.name}}</a></td>
 							<td>{{item.stock}}</td>
 						</tr>
 					{{else}}

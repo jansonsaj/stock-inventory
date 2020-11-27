@@ -251,3 +251,49 @@ test('NEED ORDERING : when no items require ordering, return empty array', async
 	const itemsToOrder = await items.needOrdering()
 	test.deepEqual(itemsToOrder, [])
 })
+
+test('UPDATE : correctly updates all fields', async test => {
+	test.plan(2)
+	const items = await new Items()
+	const item = sampleItem()
+	await items.insert(item)
+	const updatedItem = {
+		barcode: 'New barcode',
+		id: 1,
+		name: 'New name',
+		description: 'New description',
+		photo: 'New photo',
+		wholesale_price: 1,
+		retail_price: 2,
+		min_stock: 3,
+		stock: 4,
+		max_stock: 5
+	}
+
+	await items.update(updatedItem, item.barcode)
+
+	test.deepEqual(await items.findByBarcode(updatedItem.barcode), updatedItem)
+	test.is(await items.findByBarcode(item.barcode), undefined)
+})
+
+test('UPDATE : doesn\'t allow duplicate barcodes', async test => {
+	test.plan(1)
+	const items = await new Items()
+	const item1 = sampleItem()
+	item1.barcode = 'item1'
+	await items.insert(item1)
+	const item2 = sampleItem()
+	item2.barcode = 'item2'
+	await items.insert(item2)
+	const updatedItem1 = sampleItem()
+	updatedItem1.barcode = 'item2'
+
+	try {
+		await items.update(updatedItem1, item1.barcode)
+		test.fail('error not thrown')
+	} catch (err) {
+		test.is(err.message, 'an item with the barcode "item2" already exists')
+	} finally {
+		items.close()
+	}
+})
