@@ -78,7 +78,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		const barcode = barcodeScannerInput.value.trim()
 		if (!barcode) return
 
-		fetch(`${window.location.origin}/inventory/items/${barcode}`)
+		fetch(`/api/inventory/items/${barcode}`)
 			.then(showRestockWidget(barcode))
 			.catch(err => showMessage(err.message, 'error'))
 
