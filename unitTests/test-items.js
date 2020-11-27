@@ -1,6 +1,8 @@
 
 import test from 'ava'
+import sinon from 'sinon'
 import { Items } from '../modules/items.js'
+import { EmailSender } from '../modules/email-sender.js'
 
 function sampleItem() {
 	return {
@@ -149,6 +151,37 @@ test('SUBTRACT STOCK : subtract stock to nonexisting barcode', async test => {
 	} finally {
 		items.close()
 	}
+})
+
+test.serial('SUBTRACT STOCK : sends email when stock falls below minimum', async test => {
+	test.plan(1)
+	sinon.stub(EmailSender.prototype, 'sendOrderNotification')
+		.callsFake((item) => {
+			const expectedItem = sampleItem()
+			expectedItem.stock = 5
+			test.deepEqual(item, expectedItem)
+		})
+	const items = await new Items()
+	await items.insert(sampleItem())
+
+	await items.subtractStock('BARCODE', 15)
+	items.close()
+})
+
+test.serial('SUBTRACT STOCK : doesn\'t send email for stock already below minimum', async test => {
+	test.plan(0)
+	EmailSender.prototype.sendOrderNotification.restore() // Restore preivous stub from last test
+	sinon.stub(EmailSender.prototype, 'sendOrderNotification')
+		.callsFake(() => {
+			test.fail('sendOrderNotification should not be called')
+		})
+	const items = await new Items()
+	const item = sampleItem()
+	item.stock = 19
+	await items.insert(item)
+
+	await items.subtractStock('BARCODE', 1)
+	items.close()
 })
 
 test('DEDUPLICATE AND COUNT : correctly counts items', async test => {

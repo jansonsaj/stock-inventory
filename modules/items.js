@@ -1,6 +1,10 @@
 
 import sqlite from 'sqlite-async'
 import { loadSqlScript } from '../helpers/sql-loader.js'
+import { EmailSender } from './email-sender.js'
+
+const PENCE_PER_POUND = 100
+const POUND_DECIMAL_PLACES = 2
 
 class Items {
 
@@ -77,7 +81,8 @@ class Items {
 	}
 
 	/**
-	 * Decreases item's stock by the specified count
+	 * Decreases item's stock by the specified count and if necessary
+	 * send an order notification email
 	 * @param {string} barcode Item's barcode
 	 * @param {number} count The count to decrease the stock by
 	 * @returns {boolean} Returns true if the stock was successfully updated
@@ -90,6 +95,14 @@ class Items {
 		}
 		const sql = 'UPDATE items SET stock = stock - ? WHERE barcode = ?;'
 		await this.db.run(sql, count, barcode)
+
+		item.stock -= count
+		// When stock drops below minimum stock level, send an email notification
+		// Only send it when it crosses the min_stock levels
+		if (item.stock < item.min_stock && item.stock + count >= item.min_stock) {
+			const emailSender = await new EmailSender()
+			emailSender.sendOrderNotification(item)
+		}
 		return true
 	}
 
@@ -151,6 +164,10 @@ class Items {
 			}
 		})
 		return Object.values(itemMap)
+	}
+
+	static penceToPounds(pence) {
+		return (pence / PENCE_PER_POUND).toFixed(POUND_DECIMAL_PLACES)
 	}
 }
 
