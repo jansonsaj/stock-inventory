@@ -66,4 +66,27 @@ inventoryApiRouter.post('/items/:barcode/restock', async ctx => {
 	}
 })
 
+inventoryApiRouter.put('/items/:barcode', async ctx => {
+	try {
+		const items = await new Items(dbName)
+		const item = await items.findByBarcode(ctx.params.barcode)
+		if (!item) {
+			ctx.body = `There is no item with barcode ${ctx.params.barcode}`
+			ctx.status = 404
+			return
+		}
+		const updatedItem = ctx.request.body
+		// Change stored prices from Pounds to Pence
+		if (updatedItem.wholesale_price) updatedItem.wholesale_price *= 100
+		if (updatedItem.retail_price) updatedItem.retail_price *= 100
+
+		Object.assign(item, updatedItem)
+		await items.update(item, ctx.params.barcode)
+		ctx.body = item
+	} catch (err) {
+		ctx.body = err.message
+		ctx.status = 400
+	}
+})
+
 export { inventoryApiRouter }

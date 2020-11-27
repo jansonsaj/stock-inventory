@@ -91,4 +91,21 @@ inventoryRouter.get('/items-to-order', async ctx => {
 	}
 })
 
+inventoryRouter.get('/items/:barcode', async ctx => {
+	try {
+		const items = await new Items(dbName)
+		const item = await items.findByBarcode(ctx.params.barcode)
+		if (!item) {
+			ctx.hbs.error = `There is no item with barcode ${ctx.params.barcode}`
+			await ctx.render('error', ctx.hbs)
+		} else {
+			ctx.hbs.item = item
+			await ctx.render('item', ctx.hbs)
+		}
+	} catch (err) {
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+})
+
 export { inventoryRouter }

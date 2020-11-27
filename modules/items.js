@@ -26,6 +26,7 @@ class Items {
 	 * Get an item by its barcode
 	 * @param {string} barcode Item's barcode
 	 * @returns {object} Returns item that matches the barcode or undefined
+	 * @throws {Error} When barcode is empty
 	 */
 	async findByBarcode(barcode) {
 		if (!barcode) {
@@ -39,6 +40,7 @@ class Items {
 	 * Inserts a new item
 	 * @param {object} item Item object
 	 * @returns {boolean} Returns true if item was successfully inserted
+	 * @throws {Error} When item's barcode is empty or already in use
 	 */
 	async insert(item) {
 		if (!item || !item.barcode) {
@@ -62,6 +64,7 @@ class Items {
 	 * @param {string} barcode Item's barcode
 	 * @param {number} count The count to increase the stock by
 	 * @returns {boolean} Returns true if the stock was successfully updated
+	 * @throws {Error} When item with the specified barcode doesn't exist
 	 */
 	async addStock(barcode, count) {
 		const item = await this.findByBarcode(barcode)
@@ -78,6 +81,7 @@ class Items {
 	 * @param {string} barcode Item's barcode
 	 * @param {number} count The count to decrease the stock by
 	 * @returns {boolean} Returns true if the stock was successfully updated
+	 * @throws {Error} When item with the specified barcode doesn't exist
 	 */
 	async subtractStock(barcode, count) {
 		const item = await this.findByBarcode(barcode)
@@ -100,6 +104,26 @@ class Items {
 				order_price: item.wholesale_price * orderCount
 			}
 		})
+	}
+
+	/**
+	 * Updates an existing item
+	 * @param {object} item Item object
+	 * @param {string} barcode The original barcode for the item
+	 * @returns {boolean} Returns true if item was successfully updated
+	 * @throws {Error} When the barcode is changed to a non-unique one
+	 */
+	async update(item, barcode) {
+		if (item.barcode !== barcode && await this.findByBarcode(item.barcode)) {
+			throw new Error(`an item with the barcode "${item.barcode}" already exists`)
+		}
+		const sql = `UPDATE items SET
+				barcode = ?, name = ?, description = ?, wholesale_price = ?,
+				retail_price = ?, max_stock = ?, min_stock = ?, stock = ?, photo = ?
+			WHERE barcode = ?`
+		await this.db.run(sql, item.barcode, item.name, item.description, item.wholesale_price,
+			item.retail_price, item.max_stock, item.min_stock, item.stock, item.photo, barcode)
+		return true
 	}
 
 	async close() {
