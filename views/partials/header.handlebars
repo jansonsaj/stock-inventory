@@ -1,0 +1,24 @@
+<header>
+    <nav>
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+
+        <ul>
+            {{#if authorised}}
+            <a href="/inventory"><li>Scan items</li></a>
+            <a href="/inventory/new-item"><li>New item</li></a>
+            <a href="/inventory/restock"><li>Restock</li></a>
+            <a href="/inventory/all-items"><li>All items</li></a>
+            <a href="/inventory/items-to-order"><li>Items to order</li></a>
+            <br>
+            <a href="/logout"><li>Log out</li></a>
+            {{else}}
+            <a href="/login"><li>Log in</li></a>
+            <a href="/register"><li>Register</li></a>
+            {{/if}}
+        </ul>
+    </nav>
+    <h1>{{title}}</h1>
+</header>

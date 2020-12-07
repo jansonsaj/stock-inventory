@@ -11,10 +11,7 @@
 		<script type="module" src="{{host}}/js/main.js"></script>
 	</head>
 	<body>
-		<header>
-		<h1>Log In</h1>
-		<a href="/register">Register</a>
-		</header>
+		{{> header title="Log in"}}
 		{{> message}}
 		<main>
 		<form action="/login" method="post">
