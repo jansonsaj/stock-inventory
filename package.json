@@ -17,7 +17,7 @@
 		"packagedeps": "./node_modules/.bin/depcheck .",
 		"dependency": "./node_modules/.bin/dependency-check -i bcrypt --unused --no-dev . && node_modules/.bin/dependency-check --missing .",
 		"start": "node index.js",
-		"nodemon": "nodemon --ext 'js,mjs,json,handlebars'",
+		"nodemon": "nodemon --ext 'js,mjs,json,handlebars,css'",
 		"jsdoc": "node_modules/.bin/jsdoc -c jsdoc.conf",
 		"linter": "node_modules/.bin/eslint .",
 		"test": "ava"

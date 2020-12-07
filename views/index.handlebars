@@ -8,17 +8,11 @@
 	<meta name="description" content="form to add new books">
 	<meta name="author" content="Mark Tyers">
 	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+	<script type="module" src="{{host}}/js/item.js"></script>
 </head>
 
 <body>
-	<header>
-		<h1>Home</h1>
-		{{#if authorised}}
-		<a href="/logout">Log out</a>
-		{{else}}
-		<a href="/login">Log in</a>
-		{{/if}}
-	</header>
+	{{> header title="Home"}}
 	{{> message}}
 	<main>
 		<p>This is the home page. Users can see it without logging in.</p>

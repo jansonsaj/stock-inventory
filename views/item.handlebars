@@ -12,10 +12,7 @@
 </head>
 
 <body>
-	<header>
-		<h1>{{item.name}}</h1>
-		<a href="/logout">Log out</a>
-	</header>
+	{{> header title=item.name}}
 	{{> message}}
 	<main>
 		<section>
