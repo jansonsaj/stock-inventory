@@ -3,11 +3,9 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>Home Page</title>
-	<meta name="description" content="form to add new books">
-	<meta name="author" content="Mark Tyers">
-	<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+	{{> head
+		title="Scan items"
+		description="Scan items for an order"}}
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
 	<script type="module" src="{{host}}/js/inventory.js"></script>
 </head>
