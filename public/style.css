@@ -208,6 +208,13 @@ section {
 	background-color: white;
 	padding: 1rem;
 	margin: 1rem;
+	min-width: 15rem;
+	flex: 1 1 30%;
+	align-self: flex-start;
+}
+
+section.entire-row {
+	flex: 1 1 100%;
 }
 
 /* Section title */
@@ -221,30 +228,13 @@ section>h3 {
 }
 /* ===== /Section ===== */
 
-h2 {
-	font-size: 2.5vw;
-	margin: 1vw;
-	margin-left: 0.6vw;
-}
-
-p, legend {
-	font-size: 1.5vw;
-}
-
 main {
-	padding: 2rem 4rem;
-}
-
-article {
-	width: 50vw;
-	/* background-color: grey;
-	float: left; */
-}
-
-aside {
-	/* background-color: yellow;
-	float: right; */
-	width: 50vw;
+	margin: 1rem auto;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	max-width: 50rem;
+	width: 80%;
 }
 
 main a {
