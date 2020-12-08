@@ -12,19 +12,20 @@
 		{{> header title="Log in"}}
 		{{> message}}
 		<main>
-		<form action="/login" method="post">
-			<p>
-				<label for="user">Username</label><br />
-				<input type="text" name="user" placeholder="your username" value="{{body.user}}" autofocus>
-			</p>
-			<p>
-				<label for="pass">Password</label><br />
-				<input type="password" name="pass" placeholder="your password" value="{{body.pass}}">
-			</p>
-			<input type="hidden" name="referrer" value="{{referrer}}">
-			<p><input type="submit" value="Log in"></p>
-		</form>
-		<p><a href="/">Home page</a></p>
+			<section>
+				<h3>Log in</h3>
+				<form action="/login" method="post">
+					<label>Username
+						<input type="text" name="user" placeholder="your username" value="{{body.user}}" autofocus>
+					</label>
+					<label>Password
+						<input type="password" name="pass" placeholder="your password" value="{{body.pass}}">
+					</label>
+					<input type="hidden" name="referrer" value="{{referrer}}">
+					<input type="submit" value="Log in">
+				</form>
+				<a href="/">Home page</a>
+			</section>
 		</main>
 		{{> footer}}
 	</body>

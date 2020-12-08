@@ -190,20 +190,39 @@ header>a:hover {
 }
 /* ===== /Header ===== */
 
+/* ===== Footer ===== */
 footer {
 	margin-top: auto;
 	padding: 2rem;
 	text-align: center;
 }
+/* ===== /Footer ===== */
+
+/* ===== Section ===== */
+/* Hide empty sections */
+section:empty {
+	display: none;
+}
+
+section {
+	background-color: white;
+	padding: 1rem;
+	margin: 1rem;
+}
+
+/* Section title */
+section>h3 {
+	font-weight: 300;
+	color: #8c8c8c;
+	width: 100%;
+	border-bottom: 1px solid #f0f0f0;
+	margin-top: 0;
+	padding-bottom: 0.5rem;
+}
+/* ===== /Section ===== */
 
 h2 {
 	font-size: 2.5vw;
-	margin: 1vw;
-	margin-left: 0.6vw;
-}
-
-h3 {
-	font-size: 2vw;
 	margin: 1vw;
 	margin-left: 0.6vw;
 }
@@ -236,26 +255,6 @@ main a {
 main a:hover {
 	color: red;
 	text-decoration: none;
-}
-
-section {
-	background-color: #DDD;
-	width: 24vw;
-	margin-top: 1vw;
-	padding: 1vw;
-	border-radius: 1vw;
-}
-
-section>p {
-	margin: 0;
-	padding: 0;
-	margin-bottom: 0.5vw;
-}
-
-section>h3 {
-	margin: 0;
-	padding: 0;
-	font-size: 1.8vw;
 }
 
 small {
