@@ -8,6 +8,14 @@ const inventoryApiRouter = new Router({ prefix: '/api/inventory' })
 
 inventoryApiRouter.use(requireAuth)
 
+/**
+ * The script to create an item.
+ *
+ * @name New item script
+ * @route {POST} /api/inventory/items
+ * @authentication This route requires authentication or will redirect to login page.
+ * @bodyparam {Item} item The details of the item to create
+ */
 inventoryApiRouter.post('/items', async ctx => {
 	try {
 		const item = ctx.request.body
@@ -29,6 +37,14 @@ inventoryApiRouter.post('/items', async ctx => {
 	}
 })
 
+/**
+ * The script to get the specific item as JSON.
+ *
+ * @name Item script
+ * @route {GET} /api/inventory/items/:barcode
+ * @authentication This route requires authentication or will redirect to login page.
+ * @routeparam {String} :barcode is the barcode of the item
+ */
 inventoryApiRouter.get('/items/:barcode', async ctx => {
 	try {
 		const items = await new Items(dbName)
@@ -45,6 +61,15 @@ inventoryApiRouter.get('/items/:barcode', async ctx => {
 	}
 })
 
+/**
+ * The script to restock a specific item.
+ *
+ * @name Item restock script
+ * @route {POST} /api/inventory/items/:barcode/restock
+ * @authentication This route requires authentication or will redirect to login page.
+ * @routeparam {String} :barcode is the barcode of the item
+ * @bodyparam {number} count The count to increase the stock by
+ */
 inventoryApiRouter.post('/items/:barcode/restock', async ctx => {
 	try {
 		const items = await new Items(dbName)
@@ -66,6 +91,15 @@ inventoryApiRouter.post('/items/:barcode/restock', async ctx => {
 	}
 })
 
+/**
+ * The script to update an item.
+ *
+ * @name Update item script
+ * @route {PUT} /api/inventory/items/:barcode
+ * @authentication This route requires authentication or will redirect to login page.
+ * @routeparam {String} :barcode is the barcode of the item to update
+ * @bodyparam {Item} item The details of the item to create
+ */
 inventoryApiRouter.put('/items/:barcode', async ctx => {
 	try {
 		const items = await new Items(dbName)
