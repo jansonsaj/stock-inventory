@@ -1,4 +1,7 @@
-
+/**
+ * Inventory router for rendering inventory pages
+ * @module routes/inventory
+ */
 import Router from 'koa-router'
 import { requireAuth } from '../middlewares/auth.js'
 import { Items } from '../modules/items.js'

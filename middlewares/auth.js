@@ -1,4 +1,9 @@
 /**
+ * Middleware for managing authentication
+ * @module middlewares/auth
+ */
+
+/**
  * Require the user to be authorised or redirect them to login
  * @param {object} ctx Koa Context
  * @param {function} next Koa Next

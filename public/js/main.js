@@ -1,5 +1,11 @@
 /* main.js */
 
+/**
+ * Common client-side script that registers Handlebars helpers
+ * and hides the message coming from URL Search Parameters
+ * @module public/js/main
+ */
+
 import './register-helpers.js'
 
 const DEFAULT_DELAY_MS = 2000

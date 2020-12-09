@@ -1,5 +1,10 @@
 /* utils.js */
 
+/**
+ * Client-side script exposing common utility methods
+ * @module public/js/utils
+ */
+
 export const SUCCESS_STATUS = 200
 export const NOT_FOUND_STATUS = 404
 export const CLIENT_ERROR_STATUS = 400

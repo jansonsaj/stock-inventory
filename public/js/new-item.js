@@ -1,5 +1,10 @@
 /* new-item.js */
 
+/**
+ * Client-side script for new item page to add new items
+ * @module public/js/new-item
+ */
+
 import { showMessage } from './main.js'
 import { checkStatus } from './utils.js'
 

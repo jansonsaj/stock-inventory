@@ -1,4 +1,7 @@
-
+/**
+ * Public router
+ * @module routes/public
+ */
 import Router from 'koa-router'
 import { Accounts } from '../modules/accounts.js'
 import { dbName } from '../helpers/config.js'

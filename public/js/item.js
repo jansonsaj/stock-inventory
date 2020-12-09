@@ -1,4 +1,10 @@
-/* item-details.js */
+/* item.js */
+
+/**
+ * Client-side script for item details page allowing to update
+ * any of the details for the item
+ * @module public/js/item
+ */
 
 import { showMessage } from './main.js'
 import { checkStatus } from './utils.js'

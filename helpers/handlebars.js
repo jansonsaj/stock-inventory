@@ -1,3 +1,7 @@
+/**
+ * Helper module registering custom Handlebars partials and helpers
+ * @module helpers/handlebars
+ */
 import handlebars from 'handlebars'
 import fs from 'fs/promises'
 import path from 'path'

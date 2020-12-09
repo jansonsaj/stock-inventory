@@ -1,8 +1,13 @@
+/**
+ * Module for sending emails
+ * @module modules/email-sender
+ */
 import nodemailer from 'nodemailer'
 import { Items } from './items.js'
 
 /**
  * Gets credentials for the email to send with
+ * @return {obejct} Email credentials
  */
 function getEmailCredentials() {
 	// Normally credentials should be extracted from secrets.

@@ -1,6 +1,11 @@
 /* register-helpers.js */
 /* globals Handlebars */
 
+/**
+ * Script that registers client-side Handlebars helpers
+ * @module public/js/register-helpers
+ */
+
 const PENCE_PER_POUND = 100
 const POUND_DECIMAL_PLACES = 2
 

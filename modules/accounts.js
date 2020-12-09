@@ -1,4 +1,7 @@
-
+/**
+ * Module for managing user accounts
+ * @module modules/accounts
+ */
 import bcrypt from 'bcrypt-promise'
 import sqlite from 'sqlite-async'
 import { loadSqlScript } from '../helpers/sql-loader.js'
