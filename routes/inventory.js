@@ -8,6 +8,13 @@ const inventoryRouter = new Router({ prefix: '/inventory' })
 
 inventoryRouter.use(requireAuth)
 
+/**
+ * The inventory home page for scanning items.
+ *
+ * @name Inventory scan items page
+ * @route {GET} /inventory/
+ * @authentication This route requires authentication or will redirect to login page.
+ */
 inventoryRouter.get('/', async ctx => {
 	try {
 		console.log(ctx.hbs)
@@ -19,6 +26,15 @@ inventoryRouter.get('/', async ctx => {
 	}
 })
 
+/**
+ * The order summary page.
+ *
+ * @name Order summary page
+ * @route {POST} /inventory/order-summary
+ * @authentication This route requires authentication or will redirect to login page.
+ * @bodyparam {Item[]} items A list of items in the current order
+ * @bodyparam {number} totalPrice The total price for all the items
+ */
 inventoryRouter.post('/order-summary', async ctx => {
 	try {
 		const {items, totalPrice} = ctx.request.body
@@ -33,6 +49,14 @@ inventoryRouter.post('/order-summary', async ctx => {
 	}
 })
 
+/**
+ * The script to complete an order and subtract from the current stock.
+ *
+ * @name Complete order script
+ * @route {POST} /inventory/complete-order
+ * @authentication This route requires authentication or will redirect to login page.
+ * @bodyparam {Item[]} items A list of items in the current order
+ */
 inventoryRouter.post('/complete-order', async ctx => {
 	try {
 		const items = await new Items(dbName)
@@ -47,6 +71,13 @@ inventoryRouter.post('/complete-order', async ctx => {
 	}
 })
 
+/**
+ * The restock page.
+ *
+ * @name Restock page
+ * @route {GET} /inventory/restock
+ * @authentication This route requires authentication or will redirect to login page.
+ */
 inventoryRouter.get('/restock', async ctx => {
 	try {
 		await ctx.render('restock', ctx.hbs)
@@ -56,6 +87,13 @@ inventoryRouter.get('/restock', async ctx => {
 	}
 })
 
+/**
+ * The new item page.
+ *
+ * @name New item page
+ * @route {GET} /inventory/new-item
+ * @authentication This route requires authentication or will redirect to login page.
+ */
 inventoryRouter.get('/new-item', async ctx => {
 	try {
 		await ctx.render('new-item', ctx.hbs)
@@ -65,6 +103,13 @@ inventoryRouter.get('/new-item', async ctx => {
 	}
 })
 
+/**
+ * The all items page.
+ *
+ * @name All items page
+ * @route {GET} /inventory/all-items
+ * @authentication This route requires authentication or will redirect to login page.
+ */
 inventoryRouter.get('/all-items', async ctx => {
 	try {
 		const items = await new Items(dbName)
@@ -76,6 +121,14 @@ inventoryRouter.get('/all-items', async ctx => {
 	}
 })
 
+/**
+ * The items to order page containing items that are below minimum stock,
+ * together with the amount to order and the order cost.
+ *
+ * @name Items to order page
+ * @route {GET} /inventory/items-to-order
+ * @authentication This route requires authentication or will redirect to login page.
+ */
 inventoryRouter.get('/items-to-order', async ctx => {
 	try {
 		const items = await new Items(dbName)
@@ -91,6 +144,14 @@ inventoryRouter.get('/items-to-order', async ctx => {
 	}
 })
 
+/**
+ * The specific item page.
+ *
+ * @name Item page
+ * @route {GET} /inventory/items/:barcode
+ * @authentication This route requires authentication or will redirect to login page.
+ * @routeparam {String} :barcode is the barcode of the item
+ */
 inventoryRouter.get('/items/:barcode', async ctx => {
 	try {
 		const items = await new Items(dbName)
