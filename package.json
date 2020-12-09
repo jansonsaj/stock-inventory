@@ -17,6 +17,7 @@
 		"packagedeps": "./node_modules/.bin/depcheck .",
 		"dependency": "./node_modules/.bin/dependency-check -i bcrypt --unused --no-dev . && node_modules/.bin/dependency-check --missing .",
 		"start": "node index.js",
+		"start-docs": "node docs.js",
 		"nodemon": "nodemon --ext 'js,mjs,json,handlebars,css'",
 		"jsdoc": "node_modules/.bin/jsdoc -c jsdoc.conf",
 		"linter": "node_modules/.bin/eslint .",
@@ -35,14 +36,12 @@
 		"koa-session": "^6.0.0",
 		"koa-static": "^5.0.0",
 		"koa-views": "^6.3.0",
-		"node-pre-gyp": "^0.15.0",
 		"nodemailer": "^6.4.16",
 		"sqlite-async": "^1.1.0"
 	},
 	"devDependencies": {
 		"ava": "^3.12.1",
 		"depcheck": "^1.2.0",
-		"dependency": "0.0.1",
 		"dependency-check": "^4.1.0",
 		"eslint": "^7.8.1",
 		"esm": "^3.2.25",
