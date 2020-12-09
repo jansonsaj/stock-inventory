@@ -55,7 +55,7 @@ The SQLite3 commandline tool is already installed and should be used to configur
 
 ## CI/CD
 
-This repository uses GitHub Actions to run CI/CD Workflows.
+This repository uses GitHub Actions to run CI/CD Workflows in [github.com/jansonsa/jansonsa-sem1](https://github.com/jansonsa/jansonsa-sem1) repository.
 The following workflows exist:
 - On every push and pull request: Lint and test the code
 - On pushes to master: Deploy the code to Heroku
