@@ -1,4 +1,7 @@
-
+/**
+ * Router combining all of the routes
+ * @module routes/routes
+ */
 import Router from 'koa-router'
 import bodyParser from 'koa-body'
 

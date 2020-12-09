@@ -1,4 +1,7 @@
-
+/**
+ * Module for managing inventory items
+ * @module modules/items
+ */
 import sqlite from 'sqlite-async'
 import { loadSqlScript } from '../helpers/sql-loader.js'
 import { EmailSender } from './email-sender.js'
@@ -146,6 +149,7 @@ class Items {
 	/**
 	 * Counts occurrances of each item and removes duplicates
 	 * and provides a total cost of duplicated items
+	 * @static
 	 * @param {object[]} items Item array
 	 * @return {object[]} Returns items array without duplicates and with count
 	 */
@@ -166,6 +170,12 @@ class Items {
 		return Object.values(itemMap)
 	}
 
+	/**
+	 * Converts from pence to pounds
+	 * @static
+	 * @param {number} pence The price in pence
+	 * @return {number} Returns the price in pounds
+	 */
 	static penceToPounds(pence) {
 		return (pence / PENCE_PER_POUND).toFixed(POUND_DECIMAL_PLACES)
 	}

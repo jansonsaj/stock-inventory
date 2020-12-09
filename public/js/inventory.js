@@ -1,6 +1,12 @@
 /* inventory.js */
 /* globals Handlebars */
 
+/**
+ * Client-side script for iventory scan items page. Displays the last
+ * scanned item and a list of all scanned items and their total cost
+ * @module public/js/inventory
+ */
+
 import { showMessage } from './main.js'
 import { checkStatus } from './utils.js'
 

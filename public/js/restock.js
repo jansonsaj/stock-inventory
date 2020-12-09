@@ -1,6 +1,11 @@
 /* restock.js */
 /* globals Handlebars */
 
+/**
+ * Client-side script for restock page to restock new and existing items
+ * @module public/js/restock
+ */
+
 import { showMessage } from './main.js'
 import { checkStatus, SUCCESS_STATUS, NOT_FOUND_STATUS } from './utils.js'
 
