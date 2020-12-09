@@ -54,8 +54,22 @@ publicRouter.post('/register', async ctx => {
 	}
 })
 
+/**
+ * The user validation page.
+ *
+ * @name Validate page
+ * @route {GET} /postregister
+ */
 publicRouter.get('/postregister', async ctx => await ctx.render('validate'))
 
+/**
+ * The script to process user validations.
+ *
+ * @name Validate script
+ * @route {GET} /validate/:user/:token
+ * @routeparam {String} :user is the user's ID
+ * @routeparam {String} :token is the user's validation token
+ */
 publicRouter.get('/validate/:user/:token', async ctx => {
 	try {
 		console.log('VALIDATE')
@@ -74,11 +88,23 @@ publicRouter.get('/validate/:user/:token', async ctx => {
 	}
 })
 
+/**
+ * The login page.
+ *
+ * @name Login page
+ * @route {GET} /login
+ */
 publicRouter.get('/login', async ctx => {
 	console.log(ctx.hbs)
 	await ctx.render('login', ctx.hbs)
 })
 
+/**
+ * The script to log users in.
+ *
+ * @name Login script
+ * @route {GET} /login
+ */
 publicRouter.post('/login', async ctx => {
 	const account = await new Accounts(dbName)
 	ctx.hbs.body = ctx.request.body
@@ -96,6 +122,12 @@ publicRouter.post('/login', async ctx => {
 	}
 })
 
+/**
+ * The script to log users out.
+ *
+ * @name Logout script
+ * @route {GET} /logout
+ */
 publicRouter.get('/logout', async ctx => {
 	ctx.session.authorised = null
 	ctx.redirect('/?msg=you are now logged out')
