@@ -3,7 +3,7 @@
  * @module modules/items
  */
 import sqlite from 'sqlite-async'
-import { loadSqlScript } from '../helpers/sql-loader.js'
+import { loadSqlScript, tableExists } from '../helpers/sql-loader.js'
 import { EmailSender } from './email-sender.js'
 
 const PENCE_PER_POUND = 100
@@ -11,11 +11,22 @@ const POUND_DECIMAL_PLACES = 2
 
 class Items {
 
+	/**
+	 * Open the database, create items table if it doesn't exist
+	 * and populate it with data unless using in-memory database
+	 * @param {string} dbName Database name. In-memory by default
+	 */
 	constructor(dbName = ':memory:') {
 		return (async() => {
 			this.db = await sqlite.open(dbName)
-			const createTableSql = await loadSqlScript('items.sql')
-			await this.db.run(createTableSql)
+			if (!await tableExists(this.db, 'items')) {
+				const createTableSql = await loadSqlScript('items.sql')
+				await this.db.run(createTableSql)
+				if (dbName !== ':memory:') {
+					const tableDataSql = await loadSqlScript('items-data.sql')
+					await this.db.exec(tableDataSql)
+				}
+			}
 			return this
 		})()
 	}

@@ -4,18 +4,28 @@
  */
 import bcrypt from 'bcrypt-promise'
 import sqlite from 'sqlite-async'
-import { loadSqlScript } from '../helpers/sql-loader.js'
+import { loadSqlScript, tableExists } from '../helpers/sql-loader.js'
 
 const saltRounds = 10
 
 class Accounts {
 
+	/**
+	 * Open the database, create users table if it doesn't exist
+	 * and populate it with data unless using in-memory database
+	 * @param {string} dbName Database name. In-memory by default
+	 */
 	constructor(dbName = ':memory:') {
 		return (async() => {
 			this.db = await sqlite.open(dbName)
-			// we need this table to store the user accounts
-			const sql = await loadSqlScript('users.sql')
-			await this.db.run(sql)
+			if (!await tableExists(this.db, 'users')) {
+				const createTableSql = await loadSqlScript('users.sql')
+				await this.db.run(createTableSql)
+				if (dbName !== ':memory:') {
+					const tableDataSql = await loadSqlScript('users-data.sql')
+					await this.db.exec(tableDataSql)
+				}
+			}
 			return this
 		})()
 	}

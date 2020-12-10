@@ -18,3 +18,15 @@ export async function loadSqlScript(scriptName) {
 	const sqlFile = await fs.readFile(fileLocation)
 	return sqlFile.toString()
 }
+
+/**
+ * Checks wether a table exists in a database
+ * @param {object} db Database instance
+ * @param {string} tableName The name of the table
+ * @return {boolean} True if the table exists
+ */
+export async function tableExists(db, tableName) {
+	const sql = 'SELECT name FROM sqlite_master WHERE type=\'table\' AND name=?;'
+	const data = await db.get(sql, tableName)
+	return !!data
+}
