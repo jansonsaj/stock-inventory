@@ -19,18 +19,22 @@
 				<thead>
 					<tr>
 						<th>Name</th>
+						<th>Min/Max Stock</th>
 						<th>Current Stock</th>
+						<th>Stock Level</th>
 					</tr>
 				</thead>
 				<tbody>
 					{{#each items as |item|}}
 						<tr>
 							<td><a href="/inventory/items/{{item.barcode}}" >{{item.name}}</a></td>
+							<td>{{item.min_stock}} / {{item.max_stock}}</td>
 							<td>{{item.stock}}</td>
+							<td>{{item.stock_level}}%</td>
 						</tr>
 					{{else}}
 						<tr>
-							<td colspan="2">There are no items in the inventory</td>
+							<td colspan="4">There are no items in the inventory</td>
 						</tr>
 					{{/each}}
 				</tbody>

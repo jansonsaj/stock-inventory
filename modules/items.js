@@ -8,6 +8,7 @@ import { EmailSender } from './email-sender.js'
 
 const PENCE_PER_POUND = 100
 const POUND_DECIMAL_PLACES = 2
+const PERCENT_MULTIPLIER = 100
 
 class Items {
 
@@ -32,12 +33,20 @@ class Items {
 	}
 
 	/**
-	 * Get a list of all items
+	 * Get a list of all items and calculate their stock level
+	 * where 100% is the stock at maximum and 0% is stock at minimum
 	 * @returns {object[]} Returns array of all items
 	 */
 	async all() {
 		const sql = 'SELECT * FROM items;'
-		return await this.db.all(sql)
+		const items = await this.db.all(sql)
+		return items.map(item => {
+			const stockLevel = (item.stock - item.min_stock) / (item.max_stock - item.min_stock)
+			return {
+				...item,
+				stock_level: Math.round(stockLevel * PERCENT_MULTIPLIER)
+			}
+		})
 	}
 
 	/**
