@@ -29,3 +29,6 @@ config.json
 
 *.codio
 *.c9
+
+public/images/*
+!public/images/.gitkeep
