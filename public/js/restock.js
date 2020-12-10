@@ -8,6 +8,7 @@
 
 import { showMessage } from './main.js'
 import { checkStatus, SUCCESS_STATUS, NOT_FOUND_STATUS } from './utils.js'
+import { setUpImageUpload } from './image-upload.js'
 
 /**
  * Render a widget for adding stock to an existing item.
@@ -27,6 +28,7 @@ function showNewItemWidget(barcode) {
 	const template = document.querySelector('#new-item-restock-template').innerHTML
 	const renderNewItem = Handlebars.compile(template)
 	document.querySelector('#item').innerHTML = renderNewItem({ barcode })
+	setUpImageUpload()
 }
 
 /**

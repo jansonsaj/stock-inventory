@@ -2,7 +2,9 @@
 <h3>Add new item</h3>
 <form action="/api/inventory/items" method="POST">
     <label>Photo
-        <input type="file" name="photo" />
+        <input type="hidden" name="photo" />
+        <input type="file" id="photoInput" accept="image/*" />
+        <img src="" id="photoDisplay" width="100%" />
     </label>
     <label>Name
         <input type="text" name="name" autofocus />

@@ -16,9 +16,8 @@
 		<section>
 			<h3>Item details</h3>
 			<form item-barcode="{{item.barcode}}">
-				<label>
-					<input type="file" name="image" hidden readonly/>
-					<img src="{{item.photo}}" alt="{{item.name}}" width="100%">
+				<label>Photo
+					<input type="text" name="image" value="{{item.photo}}"/>
 				</label>
 				<label>Name
 					<input type="text" name="name" value="{{item.name}}" />

@@ -7,6 +7,12 @@
 
 import { showMessage } from './main.js'
 import { checkStatus } from './utils.js'
+import {
+	setUpImageUpload,
+	removeImage,
+	disableSubmitButton,
+	enableSubmitButton
+} from './image-upload.js'
 
 /**
  * When an item is successfully added, reset the form
@@ -14,6 +20,7 @@ import { checkStatus } from './utils.js'
  */
 function itemSuccessfullyAdded() {
 	showMessage('Item successfully added', 'success')
+	removeImage()
 	document.querySelector('form').reset()
 }
 
@@ -25,6 +32,7 @@ function setUpFormSubmit() {
 	const form = document.querySelector('form')
 	form.addEventListener('submit', event => {
 		event.preventDefault()
+		disableSubmitButton()
 
 		const options = {
 			method: form.method,
@@ -35,7 +43,9 @@ function setUpFormSubmit() {
 			.then(checkStatus)
 			.then(itemSuccessfullyAdded)
 			.catch(err => showMessage(err.message, 'error'))
+			.finally(enableSubmitButton)
 	})
 }
 
 window.addEventListener('DOMContentLoaded', setUpFormSubmit)
+window.addEventListener('DOMContentLoaded', setUpImageUpload)

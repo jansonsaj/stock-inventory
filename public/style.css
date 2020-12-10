@@ -381,3 +381,9 @@ tfoot td {
 	font-weight: 500;
 }
 /* ===== /Table ===== */
+
+/* ===== Images ===== */
+img[src=""] {
+	display: none;
+}
+/* ===== /Images ===== */
