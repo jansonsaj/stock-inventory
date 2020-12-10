@@ -10,6 +10,8 @@ import { showMessage } from './main.js'
 import { checkStatus, SUCCESS_STATUS, NOT_FOUND_STATUS } from './utils.js'
 import { setUpImageUpload } from './image-upload.js'
 
+let defaultItemHtml
+
 /**
  * Render a widget for adding stock to an existing item.
  * @param {object} item Item
@@ -35,7 +37,7 @@ function showNewItemWidget(barcode) {
  * Reset elements when stock for an item gets updated
  */
 function resetElements() {
-	document.querySelector('#item').innerHTML = ''
+	document.querySelector('#item').innerHTML = defaultItemHtml
 	document.querySelector('#barcode-scanner').focus()
 }
 
@@ -79,6 +81,8 @@ function showRestockWidget(barcode) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+	defaultItemHtml = document.querySelector('#item').innerHTML
+
 	const barcodeScannerInput = document.querySelector('#barcode-scanner')
 	barcodeScannerInput.addEventListener('keyup', event => {
 		if (event.key !== 'Enter') return

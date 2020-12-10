@@ -17,7 +17,8 @@
 			<h3>Item details</h3>
 			<form item-barcode="{{item.barcode}}">
 				<label>Photo
-					<input type="text" name="image" value="{{item.photo}}"/>
+					<input type="text" name="image" value="{{item.photo}}" />
+					<img src="{{item.photo}}" width="100%" />
 				</label>
 				<label>Name
 					<input type="text" name="name" value="{{item.name}}" />
