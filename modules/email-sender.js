@@ -20,7 +20,7 @@ function getEmailCredentials() {
 
 class EmailSender {
 	static SENDER_ADDRESS = 'jansonsa.sem1@gmail.com'
-	static SHOP_OWNER_ADDRESS = 'jansonsaj@gmail.com'
+	static SHOP_OWNER_ADDRESS = 'jansonsa@uni.coventry.ac.uk'
 
 	constructor() {
 		return (async() => {

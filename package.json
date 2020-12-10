@@ -21,7 +21,8 @@
 		"nodemon": "nodemon --ext 'js,mjs,json,handlebars,css'",
 		"jsdoc": "node_modules/.bin/jsdoc -c jsdoc.conf",
 		"linter": "node_modules/.bin/eslint .",
-		"test": "ava"
+		"test": "ava",
+		"postinstall": "./populate-tables.sh"
 	},
 	"author": "",
 	"license": "ISC",
